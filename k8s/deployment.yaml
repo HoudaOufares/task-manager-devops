@@ -1,0 +1,29 @@
+#
+apiVersion: apps/v1 #apiVersion: v1 for Core like pod/service/ConfigMap , each ressource has its own type of ApiVersion 
+kind: Deployment
+
+#
+metadata:
+  name: task-manager-deployment
+  labels:
+    app: task-manager # helps filtring : kubectl get pods -l app=task-manager
+    #Service will use this label to find pods 
+
+#3 composants : replicas/selector/template
+spec:
+  replicas: 2
+  selector:
+    matchLabels: #for matching with le label of metadata 
+      app: task-manager #the created pods will have this label 
+  
+  template: #a model for creating pods : metadata/labels & spec/containers
+    metadata:
+      labels:
+        app: task-manager 
+    
+    spec:
+      containers:
+      - name: task-manager-container
+        image: task-manager:v1
+        ports:
+        - containerPort: 5000 #we can have a lot of ports like : 5000 for HTTP / 9090 for possible metrics / 8080 for possible admin port 
