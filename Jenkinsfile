@@ -22,13 +22,16 @@ pipeline{
 
         stage('Build Docker Image'){
             steps{
-                echo ' Building Docker image...'
-                script{
-                    sh 'echo "Image Docker déjà créée: task-manager:v1"'
-                }
+            script {
+            sh 'docker build -t houdaoufares620/task-manager:v${BUILD_NUMBER} .'
+            withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                sh 'docker push houdaoufares620/task-manager:v${BUILD_NUMBER}'
             }
         }
-
+        }
+        }
+        
         stage('Deploy to  Kubernetes'){
             steps{
                 echo 'Deploying to Kubernetes...'
