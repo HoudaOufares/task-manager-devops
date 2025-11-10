@@ -8,6 +8,18 @@ pipeline{
             }
         }
 
+        stage('Test'){
+            steps{
+                echo 'Running automated tests with pytest...'
+                sh '''
+                  python3 -m venv venv 
+                  . venv/bin/activate 
+                  pip install -r requirements.txt
+                  python3 -m pytest tests/ -v
+                '''
+            }
+        }
+
         stage('Build Docker Image'){
             steps{
                 echo ' Building Docker image...'
