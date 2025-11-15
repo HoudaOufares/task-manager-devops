@@ -32,10 +32,14 @@ pipeline{
         }
         }
         
-        stage('Deploy to  Kubernetes'){
+        stage('Deploy to Kubernetes...'){
             steps{
-                echo 'Deploying to Kubernetes...'
-                sh 'echo "kubectl apply -f k8s/"'
+                echo 'Deploying to Kubernetes..'
+                script{
+                    sh 'echo "kubectl apply -f k8s/deployment.yml"'
+                    sh 'echo "kubectl apply -f k8s/service.yml"'
+                    sh 'echo "kubectl set imagedeployment/task-manager-deployment task-manager-container=houdaoufares620/task-manager:v${BUILD_NUMBER} --record"'
+                }
             }
         }
 
