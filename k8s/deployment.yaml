@@ -1,8 +1,6 @@
-#
 apiVersion: apps/v1 #apiVersion: v1 for Core like pod/service/ConfigMap , each ressource has its own type of ApiVersion 
 kind: Deployment
 
-#
 metadata:
   name: task-manager-deployment
   labels:

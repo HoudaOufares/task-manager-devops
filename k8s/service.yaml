@@ -10,7 +10,7 @@ metadata:
 #spec: Service Configuration
 spec:
   type: NodePort
-  selector:  #cibler les ports grace au label deja posé en deployment 
+  selector: 
     app: task-manager
   ports:
   - protocol: TCP
